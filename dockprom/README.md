@@ -1,14 +1,17 @@
 dockprom
 ========
 
-A monitoring solution for Docker hosts and containers with [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), 
-[NodeExporter](https://github.com/prometheus/node_exporter) and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
+一个监控docker主机和docker容器的方案，用到 [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), 
+[NodeExporter](https://github.com/prometheus/node_exporter),[Redis_Exporter]https://github.com/oliver006/redis_exporter , [Postgresql_exporter]
+and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
 
-***If you're looking for the Docker Swarm version please go to [stefanprodan/swarmprom](https://github.com/stefanprodan/swarmprom)***
+***如果你在寻找Docker Swarm的版本，请到 [stefanprodan/swarmprom](https://github.com/stefanprodan/swarmprom)***
 
 ## Install
 
-Clone this repository on your Docker host, cd into dockprom directory and run compose up:
+克隆这个知识库到你的docker主机上, cd进dockprom里面，然后运行docker compose的命令，操作如下:
+
+
 
 ```bash
 git clone https://github.com/stefanprodan/dockprom
@@ -17,25 +20,37 @@ cd dockprom
 ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
 ```
 
-Prerequisites:
+命令中ADMIN_USER=admin ADMIN_PASSWORD=admin是设置里面的用户和账户密码，在caddy中用到了这两个输入，作为一些监控端口认证，防止被恶意访问。
+你可以在运行时，设定成你想要的用户名和密码。
+
+
+预先需要的环境:
 
 * Docker Engine >= 1.13
 * Docker Compose >= 1.11
 
-Containers:
 
-* Prometheus (metrics database) `http://<host-ip>:9090`
-* AlertManager (alerts management) `http://<host-ip>:9093`
-* Grafana (visualize metrics) `http://<host-ip>:3000`
-* NodeExporter (host metrics collector)
-* cAdvisor (containers metrics collector)
-* Caddy (reverse proxy and basic auth provider for prometheus and alertmanager) 
+容器介绍:
 
-## Setup Grafana
+* Prometheus (指标面板，prometheus检测数据查询) `http://<host-ip>:9090`
+* AlertManager (报警管理页面)                  `http://<host-ip>:9093`
+* Grafana (指标可视化)                         `http://<host-ip>:3000`
+* NodeExporter (主机信息收集器)
+* cAdvisor (容器信息收集器)
+* Caddy (反向代理和给prometheus和alertmanager提供基本的账户登录，类似于nginx的服务器，可查看维基百科学习相关资料：https://zh.wikipedia.org/wiki/Caddy) 
 
-Navigate to `http://<host-ip>:3000` and login with user ***admin*** password ***admin***. You can change the credentials in the compose file or by supplying the `ADMIN_USER` and `ADMIN_PASSWORD` environment variables on compose up.
+## 安装Grafana
 
-Grafana is preconfigured with dashboards and Prometheus as the default data source:
+在浏览器中输入 `http://<host-ip>:3000` 并用你在开始启动设置的账号密码进行登录认证，如果你开始没有设置，则默认   账号：admin  密码：admin  
+你可以通过改变配置文件中的认证账户密码，相应的位置为docker-compose.yml文件中关于grafana这个容器的设置，
+即参数中的：
+* environment:
+*      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+*      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+
+或者开始运行docker-compose up命令时提供ADMIN_USER和ADMIN_PASSWORD的方式重设密码.
+
+Grafana提前设置好了仪表板，并配置好了Prometheus最为默认数据来源:
 
 * Name: Prometheus
 * Type: Prometheus
@@ -46,24 +61,26 @@ Grafana is preconfigured with dashboards and Prometheus as the default data sour
 
 ![Host](https://raw.githubusercontent.com/stefanprodan/dockprom/master/screens/Grafana_Docker_Host.png)
 
-The Docker Host Dashboard shows key metrics for monitoring the resource usage of your server:
+Docker主机仪表板展示了监控你启动的服务占用的计算机资源相关的并且比较重要的数据，主要并且重要的指标数据：
 
-* Server uptime, CPU idle percent, number of CPU cores, available memory, swap and storage
-* System load average graph, running and blocked by IO processes graph, interrupts graph
-* CPU usage graph by mode (guest, idle, iowait, irq, nice, softirq, steal, system, user)
-* Memory usage graph by distribution (used, free, buffers, cached)
-* IO usage graph (read Bps, read Bps and IO time)
-* Network usage graph by device (inbound Bps, Outbound Bps)
-* Swap usage and activity graphs
+* Server uptime, CPU idle percent（CPU空闲占比）, number of CPU cores（CPU的核数）, available memory（有效内存）, swap and storage（交换和存储）
+* System load average graph（系统平均负载图）, running and blocked by IO processes graph（由IO进程运行和阻塞图）, 
+* interrupts graph（中断图）
+* CPU usage graph by mode (guest, idle, iowait, irq, nice, softirq, steal, system, user)（CPU的使用率，按照各种模式划分的）
+* Memory usage graph by distribution (used, free, buffers, cached)（内存使用情况图分布）
+* IO usage graph (read Bps, read Bps and IO time)（IO使用情况图）
+* Network usage graph by device (inbound Bps, Outbound Bps) （设备的网络使用情况图）
+* Swap usage and activity graphs （交换使用情况和活动​​图）
 
-For storage and particularly Free Storage graph, you have to specify the fstype in grafana graph request.
-You can find it in `grafana/dashboards/docker_host.json`, at line 480 :
+对于存储，特别是Free Storage graph（空闲存储图），你需要在grafana的fstype(文件类型)进行特别说明，
+
+你可以在文件 `grafana/dashboards/docker_host.json` 480行找到 :
 
       "expr": "sum(node_filesystem_free{fstype=\"btrfs\"})",
       
-I work on BTRFS, so i need to change `aufs` to `btrfs`.
+我是工作在BTRFS上, 所以我必须把 `aufs` 改为 `btrfs`.
 
-You can find right value for your system in Prometheus `http://<host-ip>:9090` launching this request :
+你可以通过Prometheus `http://<host-ip>:9090`找到你系统的fstype值，输入：
 
       node_filesystem_free
 
