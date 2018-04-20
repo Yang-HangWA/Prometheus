@@ -1,0 +1,35 @@
+#route:
+#    receiver: 'slack'
+
+#receivers:
+#    - name: 'slack'
+#      slack_configs:
+#          - send_resolved: true
+#            text: "{{ .CommonAnnotations.description }}"
+#            username: 'Prometheus'
+#            channel: '#<channel-name>'
+#            api_url: 'https://hooks.slack.com/services/<webhook-id>'
+
+global:
+  smtp_smarthost: 'smtp.sohu.com:25'
+  smtp_from: 'prometheus_360@sohu.com'
+  smtp_auth_username: 'prometheus_360@sohu.com'
+  smtp_auth_password: 'winxin565901262'
+
+
+templates:
+  - '/root/alertmanager/template/*.tmpl'
+
+route:
+  group_by: ['alertname', 'cluster', 'service']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 10m
+  receiver: default-receiver
+
+
+receivers:
+- name: 'default-receiver'
+  email_configs:
+  - to: 'yanghang@360.net'
+
