@@ -1,9 +1,15 @@
-dockprom
-========
 
-一个监控docker主机和docker容器的方案，用到 [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), 
-[NodeExporter](https://github.com/prometheus/node_exporter),[Redis_Exporter]https://github.com/oliver006/redis_exporter , [Postgresql_exporter]
-and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
+yh-prometheus
+========
+本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.
+[Prometheus结构] https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/prometheus_.png
+
+一个监控docker主机和docker容器的方案，用到 
+[Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), 
+[NodeExporter](https://github.com/prometheus/node_exporter),
+[Redis_Exporter](https://github.com/oliver006/redis_exporter) ,
+[Postgres_exporter](https://github.com/wrouesnel/postgres_exporter) and alerting with
+[AlertManager](https://github.com/prometheus/alertmanager).
 
 ***如果你在寻找Docker Swarm的版本，请到 [stefanprodan/swarmprom](https://github.com/stefanprodan/swarmprom)***
 
@@ -59,7 +65,7 @@ Grafana提前设置好了仪表板，并配置好了Prometheus最为默认数据
 
 ***Docker Host Dashboard***
 
-![Host](https://raw.githubusercontent.com/stefanprodan/dockprom/master/screens/Grafana_Docker_Host.png)
+![Host](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Grafana_Docker_Host.png)
 
 Docker主机仪表板展示了监控你启动的服务占用的计算机资源相关的并且比较重要的数据，主要并且重要的指标数据：
 
@@ -86,7 +92,7 @@ Docker主机仪表板展示了监控你启动的服务占用的计算机资源�
 
 ***Docker Containers Dashboard***
 
-![Containers](https://raw.githubusercontent.com/stefanprodan/dockprom/master/screens/Grafana_Docker_Containers.png)
+![Containers](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Grafana_Docker_Containers.png)
 
 The Docker Containers Dashboard shows key metrics for monitoring running containers:
 
@@ -102,7 +108,7 @@ Note that this dashboard doesn't show the containers that are part of the monito
 
 ***Monitor Services Dashboard***
 
-![Monitor Services](https://raw.githubusercontent.com/stefanprodan/dockprom/master/screens/Grafana_Prometheus.png)
+![Monitor Services](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Grafana_Prometheus.png)
 
 The Monitor Services Dashboard shows key metrics for monitoring the containers that make up the monitoring stack:
 
@@ -269,4 +275,4 @@ receivers:
             api_url: 'https://hooks.slack.com/services/<webhook-id>'
 ```
 
-![Slack Notifications](https://raw.githubusercontent.com/stefanprodan/dockprom/master/screens/Slack_Notifications.png)
+![Slack Notifications](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Slack_Notifications.png)
