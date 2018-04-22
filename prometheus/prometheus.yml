@@ -37,7 +37,7 @@ scrape_configs:
   - job_name: 'postgres_exporter'
     scrape_interval: 10s
     static_configs:
-      - targets: ['10.91.42.77:5051']
+      - targets: ['10.91.42.77:9187']
 
 alerting:
   alertmanagers:

@@ -1,5 +1,0 @@
-time="2018-04-19T15:00:10+08:00" level=info msg="Redis Metrics Exporter v0.17.1    build date: 2018-03-22-14:45:15    sha1: e0df01633ff5493fce3132af8ceee1a0d996395d    Go: go1.9.4"
-time="2018-04-19T15:00:10+08:00" level=info msg="Providing metrics at :9121/metrics"
-time="2018-04-19T15:00:10+08:00" level=info msg="Connecting to redis hosts: []string{\"redis://localhost:6379\"}"
-time="2018-04-19T15:00:10+08:00" level=info msg="Using alias: []string{\"\"}"
-time="2018-04-19T15:00:10+08:00" level=fatal msg="listen tcp :9121: bind: address already in use"
