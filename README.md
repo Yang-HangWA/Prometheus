@@ -2,7 +2,7 @@
 yh-prometheus
 ========
 本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.
-[Prometheus](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/prometheus_.png)
+![Prometheus](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/prometheus_.png)
 
 一个监控docker主机和docker容器的方案，用到 
 [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), 
