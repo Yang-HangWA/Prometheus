@@ -1,6 +1,6 @@
 
-    ========
-    本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.Prometheus的结构图如下：
+    Prometheus(cAdvisor+NodeExporter+Redis_Exporter+Postgres_Exporter+AlertManager)
+本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.Prometheus的结构图如下：
 ![Prometheus](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/prometheus_.png)
 
 
@@ -13,8 +13,8 @@
 [AlertManager](https://github.com/prometheus/alertmanager).
 
 
-    主要参照的项目是 
-[Dockprom](https://github.com/stefanprodan/dockprom)
+主要参照的项目是 [Dockprom](https://github.com/stefanprodan/dockprom)
+更多资料参考 [Prometheus介绍](https://stefanprodan.com/2016/a-monitoring-solution-for-docker-hosts-containers-and-containerized-services/)
 ***如果你在寻找Docker Swarm的版本，请到 [stefanprodan/swarmprom](https://github.com/stefanprodan/swarmprom)***
 
 ## 安装
@@ -29,7 +29,8 @@ quick_start.sh第一个运行的命令为：
 ```bash
      docker-compose up -d
 ```
-    这个命令可以设置用户名和密码，如果你想自己设置账号密码，可以修改脚本设置。
+
+这个命令可以设置用户名和密码，如果你想自己设置账号密码，可以修改脚本设置。
 ```bash
 ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
 ```
@@ -50,7 +51,7 @@ ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
 * Grafana (指标可视化)                         `http://<host-ip>:3000`
 * NodeExporter (主机信息收集器，默认端口为9100)                
 * cAdvisor (容器信息收集器，默认端口为8080)
-* Postgre_exporter(pg信息收集器默认端口为9187)      
+* Postgres_exporter(pg信息收集器默认端口为9187)      
 * Caddy (反向代理和给prometheus和alertmanager提供基本的账户登录，类似于nginx的服务器，可查看维基百科学习相关资料：https://zh.wikipedia.org/wiki/Caddy) 
 
 ## 安装Grafana
@@ -58,10 +59,11 @@ ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
 在浏览器中输入 `http://<host-ip>:3000` 并用你在开始启动设置的账号密码进行登录认证，如果你开始没有设置，则默认   账号：admin  密码：admin  
 你可以通过改变配置文件中的认证账户密码，相应的位置为docker-compose.yml文件中关于grafana这个容器的设置，
 即参数中的：
+```bash
 * environment:
 *      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
 *      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-
+```
 或者开始运行docker-compose up命令时提供ADMIN_USER和ADMIN_PASSWORD的方式重设密码.
 
 Grafana提前设置好了仪表板，并配置好了Prometheus最为默认数据来源:
