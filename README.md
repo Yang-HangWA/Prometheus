@@ -1,6 +1,6 @@
 
-========
-本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.Prometheus的结构图如下：
+    ========
+    本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.Prometheus的结构图如下：
 ![Prometheus](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/prometheus_.png)
 
 
@@ -9,26 +9,32 @@
 [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), 
 [NodeExporter](https://github.com/prometheus/node_exporter),
 [Redis_Exporter](https://github.com/oliver006/redis_exporter) ,
-[Postgres_exporter](https://github.com/wrouesnel/postgres_exporter) and alerting with
+[Postgres_Exporter](https://github.com/wrouesnel/postgres_exporter) 和报警工具
 [AlertManager](https://github.com/prometheus/alertmanager).
 
+
+    主要参照的项目是 
+[Dockprom](https://github.com/stefanprodan/dockprom)
 ***如果你在寻找Docker Swarm的版本，请到 [stefanprodan/swarmprom](https://github.com/stefanprodan/swarmprom)***
 
-## Install
+## 安装
 
-克隆这个知识库到你的docker主机上, cd进dockprom里面，然后运行docker compose的命令，操作如下:
-
-
-
+克隆这个知识库到你的docker主机上, cd进Prometheus里面，然后运行docker compose的命令，操作如下:
 ```bash
-git clone https://github.com/stefanprodan/dockprom
-cd dockprom
-
+git clone https://github.com/Yang-HangWA/Prometheus.git
+cd Prometheus
+bash quick_start.sh
+```
+quick_start.sh第一个运行的命令为：
+```bash
+     docker-compose up -d
+```
+    这个命令可以设置用户名和密码，如果你想自己设置账号密码，可以修改脚本设置。
+```bash
 ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
 ```
-
 命令中ADMIN_USER=admin ADMIN_PASSWORD=admin是设置里面的用户和账户密码，在caddy中用到了这两个输入，作为一些监控端口认证，防止被恶意访问。
-你可以在运行时，设定成你想要的用户名和密码。
+    你可以在运行时，设定成你想要的用户名和密码。
 
 
 预先需要的环境:
@@ -42,8 +48,9 @@ ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
 * Prometheus (指标面板，prometheus检测数据查询) `http://<host-ip>:9090`
 * AlertManager (报警管理页面)                  `http://<host-ip>:9093`
 * Grafana (指标可视化)                         `http://<host-ip>:3000`
-* NodeExporter (主机信息收集器)
-* cAdvisor (容器信息收集器)
+* NodeExporter (主机信息收集器，默认端口为9100)                
+* cAdvisor (容器信息收集器，默认端口为8080)
+* Postgre_exporter(pg信息收集器默认端口为9187)      
 * Caddy (反向代理和给prometheus和alertmanager提供基本的账户登录，类似于nginx的服务器，可查看维基百科学习相关资料：https://zh.wikipedia.org/wiki/Caddy) 
 
 ## 安装Grafana
