@@ -1,5 +1,5 @@
 
-    Prometheus(cAdvisor+NodeExporter+Redis_Exporter+Postgres_Exporter+AlertManager)
+##Prometheus(cAdvisor+NodeExporter+Redis_Exporter+Postgres_Exporter+AlertManager)
 本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.Prometheus的结构图如下：
 ![Prometheus](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/prometheus_.png)
 
@@ -23,13 +23,28 @@
 ```bash
 git clone https://github.com/Yang-HangWA/Prometheus.git
 cd Prometheus
-bash quick_start.sh
+docker-compose up -d
 ```
 quick_start.sh第一个运行的命令为：
 ```bash
      docker-compose up -d
 ```
+可以执行quick_start.sh的前提是你配置好了登录redis和postgres的信息。
 
+```bash
+sudo nohup ./redis_exporter/redis_exporter  -redis.password passwd -redis.addr  redis://localhost:6379  > /dev/null &
+···
+
+quick_start.sh就是运行redis获取信息的exporter,其中-redis.password后接redis的密码，-redis.addr接redis的地址。
+参数配置不清楚可以参考[Redis_Exporter](https://github.com/oliver006/redis_exporter)
+
+```bash
+sudo docker run --name pg_exporter --net=host -e DATA_SOURCE_NAME="postgres://postgres:postgres@localhost:5432/?sslmode=disable" wrouesnel/postgres_exporter  > /dev/null &
+```
+
+quick_start.sh是配置postgres的登录认证，这里用--net=host的方式运行，暂时没有找到什么解决方法，所以这个镜像是单独启动的，并没有写到docker compose中.
+DATA_SOURCE_NAME是将登录pg的用户名和密码写入到一个地址里， DATA_SOURCE_NAME="postgresql://postgres:password@localhost:5432/?sslmode=disable"
+如果有什么疑问可以参考[Postgres_Exporter](https://github.com/wrouesnel/postgres_exporter) 
 这个命令可以设置用户名和密码，如果你想自己设置账号密码，可以修改脚本设置。
 ```bash
 ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
