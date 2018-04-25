@@ -115,23 +115,23 @@ Docker主机仪表板展示了监控你启动的服务占用的计算机资源�
 
       node_filesystem_free
 
-***Docker Containers Dashboard***
+***Docker Containers Dashboard（Docker容器监控面板）***
 
 ![Containers](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Grafana_Docker_Containers.png)
 
 Dockerr容器面板展示了运行的docker容器的主要性能指标:
 
-* Total containers CPU load, memory and storage usage
-* Running containers graph, system load graph, IO usage graph
-* Container CPU usage graph
-* Container memory usage graph
-* Container cached memory usage graph
-* Container network inbound usage graph
-* Container network outbound usage graph
+* Total containers CPU load, memory and storage usage（容器总的CPU下载，内存使用、存储情况）
+* Running containers graph（运行的容器图）, system load graph（系统下载图）, IO usage graph（IO使用情况图）
+* Container CPU usage graph（容器CPU使用情况图）
+* Container memory usage graph（容器内存使用情况图）
+* Container cached memory usage graph（容器缓存使用情况图）
+* Container network inbound usage graph（容器网络输入使用图）
+* Container network outbound usage graph（容器网络输出使用图）
 
 Note that this dashboard doesn't show the containers that are part of the monitoring stack.
 
-***Monitor Services Dashboard***
+***Monitor Services Dashboard（用于监控程序的面板）***
 
 ![Monitor Services](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Grafana_Prometheus.png)
 
