@@ -119,7 +119,7 @@ Docker主机仪表板展示了监控你启动的服务占用的计算机资源�
 
 ![Containers](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Grafana_Docker_Containers.png)
 
-The Docker Containers Dashboard shows key metrics for monitoring running containers:
+Dockerr容器面板展示了运行的docker容器的主要性能指标:
 
 * Total containers CPU load, memory and storage usage
 * Running containers graph, system load graph, IO usage graph
