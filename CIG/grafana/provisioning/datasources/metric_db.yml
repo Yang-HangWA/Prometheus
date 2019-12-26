@@ -1,0 +1,28 @@
+datasources:
+- access: 'proxy'
+  editable: true
+  is_default: true
+  name: 'metric_db'
+  org_id: 1
+  type: 'influxdb'
+  url: 'http://influxsrv:8086'
+  version: 1
+  basic auth: true
+  user: "root"
+  password: "root"
+  database: 'metric_db'
+
+#datasources:
+#- access: 'proxy'
+#  editable: true
+#  is_default: true
+#  name: 'cadvisor'
+#  org_id: 1
+#  type: 'influxdb'
+#  url: 'http://influxsrv:8086'
+#  version: 1
+#  basic auth: true
+#  user: "root"
+#  password: "root"
+#  database: 'cadvisor'
+
