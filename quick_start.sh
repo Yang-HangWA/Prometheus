@@ -1,6 +1,6 @@
-sudo docker-compose up -d
-sudo nohup ./redis_exporter/redis_exporter  -redis.password penetration -redis.addr  redis://localhost:6379  > /dev/null &
-sudo docker run --name pg_exporter --net=host -e DATA_SOURCE_NAME="postgres://postgres:postgres@localhost:5432/?sslmode=disable" wrouesnel/postgres_exporter  > /dev/null &
+docker-compose up -d
+nohup ./redis_exporter/redis_exporter  -redis.password penetration -redis.addr  redis://localhost:6379  > /dev/null &
+docker run --name pg_exporter --net=host -e DATA_SOURCE_NAME="postgres://postgres:postgres@localhost:5432/?sslmode=disable" wrouesnel/postgres_exporter  > /dev/null &
 
 ti1=`date +%s`
 ti2=`date +%s`
