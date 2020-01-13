@@ -1,3 +1,3 @@
-sudo docker-compose down 
-sudo pkill redis_exporter
-sudo docker rm -f pg_exporter
+docker-compose down 
+pkill redis_exporter
+docker rm -f pg_exporter
