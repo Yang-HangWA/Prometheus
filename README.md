@@ -1,4 +1,5 @@
 
+
 ### Prometheus(cAdvisor+NodeExporter+Redis_Exporter+Postgres_Exporter+AlertManager)
 本方案的重组了github上多个项目，重建了一套Prometheus的监控方案.Prometheus的结构图如下：
 ![Prometheus](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/prometheus_.png)
@@ -65,7 +66,7 @@ ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
 * AlertManager (报警管理页面)                  `http://<host-ip>:9093`
 * Grafana (指标可视化)                         `http://<host-ip>:3000`
 * NodeExporter (主机信息收集器，默认端口为9100)                
-* cAdvisor (容器信息收集器，默认端口为8080)
+* cAdvisor (容器信息收集器，默认端口为8080，主机映射为8081)
 * Postgres_exporter(pg信息收集器默认端口为9187)      
 * Caddy (反向代理和给prometheus和alertmanager提供基本的账户登录，类似于nginx的服务器，可查看维基百科学习相关资料：https://zh.wikipedia.org/wiki/Caddy) 
 
@@ -301,4 +302,3 @@ receivers:
 ```
 
 ![Slack Notifications](https://github.com/Yang-HangWA/yh-prometheus/blob/master/screens/Slack_Notifications.png)
-
